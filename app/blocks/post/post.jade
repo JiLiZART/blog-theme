@@ -1,0 +1,21 @@
+include ../tags/tags
+include ../text/text
+include ../date/date
+include ../comments/comments
+include ../container/container
+
+mixin post(title)
+	article.post&attributes(attributes)
+		+container().post__container
+			+date('november 05, 2016', 'asdasd').post__date
+			header.post__header
+				h2.post__title
+					a.post__title-link(href="post.html")=title
+
+			+text().post__body
+				block
+
+			footer.post__footer
+				+tags().post__tags
+
+	+comments()

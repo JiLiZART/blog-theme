@@ -19,6 +19,7 @@ gulp.task('styles', () => (
 		.pipe(plumber({errorHandler: errorHandler(`Error in \'styles\' task`)}))
 		.pipe(gulpIf(isDebug, sourcemaps.init()))
 		.pipe(stylus({
+			paths: ['node_modules/'],
 			use: [
 				importIfExist(),
 				rupture(),

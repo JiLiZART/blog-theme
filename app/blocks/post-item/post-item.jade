@@ -1,0 +1,8 @@
+include ../date/date
+
+mixin post-item(title)
+	.post-item&attributes(attributes)
+		header.post-item__header
+			+date('november 05, 2016', 'asdasd').post-item__date
+			h2.post-item__title
+				a.post-item__title-link(href="post.html")=title

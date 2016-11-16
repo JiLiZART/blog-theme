@@ -1,6 +1,10 @@
-extends /blocks/layout-default/layout-default
+extends ../blocks/layout-default/layout-default
+include ../blocks/post-list/post-list
+include ../blocks/container/container
 
 block head
-	- var pageTitle = 'CSSSR Project Template';
+	- var pageTitle = 'Blog Theme';
 
 block content
+	+container()
+		+post-list()
