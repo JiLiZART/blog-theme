@@ -1,0 +1,7 @@
+mixin comment-form()
+	form.comment-form(action="post.html/comment")&attributes(attributes)
+		.form-group
+			textarea.form-control.comment-form__textarea(placeholder="Text here...")
+
+		button.btn.btn-primary.btn-sm(type="submit") Post
+		block

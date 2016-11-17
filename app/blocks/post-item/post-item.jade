@@ -1,4 +1,5 @@
 include ../date/date
+include ../text/text
 
 mixin post-item(title)
 	.post-item&attributes(attributes)
@@ -6,3 +7,5 @@ mixin post-item(title)
 			+date('november 05, 2016', 'asdasd').post-item__date
 			h2.post-item__title
 				a.post-item__title-link(href="post.html")=title
+		+text().post__body
+			block

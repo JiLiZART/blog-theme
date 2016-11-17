@@ -2,15 +2,26 @@
 .comment
 	display block
 
+	&__body
+		overflow: hidden;
+		position: relative;
+		padding-left: 3rem;
+
 	&__avatar
-		float left
 		margin-right .5rem
+		position absolute
+		left 0
+		top 0
+
+		display block
+		width 2rem
+		height 2rem
 
 	&__author
 		font-size 1rem
 
 	&__header
-		margin-bottom 1.3rem
+		margin-bottom 1rem
 
 	&__date
 		display block

@@ -1,9 +1,21 @@
-include ../container/container
 include ../comment/comment
+include ../comment-form/comment-form
 
 mixin comment-list()
 	+b.comment-list&attributes(attributes)
-		+comment('Nikolay Kost', '10.11.2016, 16:28:40').comment-list__item
-			| And now…transducers are available in PHP via transducers.php!
+		+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+			+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
 
+		+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+			+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+				+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+					+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+						+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+							+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+								+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+									+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+										+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+											+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+												+comment('Nikolay Kost', '10.11.2016, 16:28:40', 'And now…transducers are available in PHP via transducers.php!').comment-list__item
+		+comment-form().comment-list__form
 		block

@@ -1,2 +1,65 @@
-.comment-list
+$ctx = comment-list
+
+.{$ctx}
+	position relative
 	display block
+
+	//&:before
+	//	position absolute
+	//	top 0
+	//	left 18px
+	//	bottom 0
+	//
+	//	content ''
+	//	display block
+	//	width 1px
+	//	height 100%
+	//	background #ccc
+
+	.{$ctx}__item
+		position relative
+		margin-top: 1rem;
+
+	.{$ctx}__item .{$ctx}__item
+		margin-left 3rem
+	//
+	//	&:before
+	//		position absolute
+	//		top 1rem
+	//		right 100%
+	//
+	//		content ''
+	//		display block
+	//		width calc(2rem - 3px)
+	//		height 1px
+	//		background #ccc
+	//
+	//	&:after
+	//		position absolute
+	//		top 1rem
+	//		right 100%
+	//
+	//		margin-left -2rem
+	//		content ''
+	//		display block
+	//
+	//		width 3px
+	//		height 3px
+	//
+	//		border-radius 100%
+	//		background #ccc
+	//
+	//.{$ctx}__item .{$ctx}__item .{$ctx}__item:before
+	//	width calc(5rem - 3px)
+	//
+	//.{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item:before
+	//	width calc(8rem - 3px)
+	//
+	//.{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item:before
+	//	width calc(11rem - 3px)
+	//
+	//.{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item:before
+	//	width calc(14rem - 3px)
+	//
+	.{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item .{$ctx}__item
+		margin-left 0

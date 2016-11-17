@@ -1,20 +1,25 @@
 .post-item
 	display block
-	margin-bottom 3.5rem
 
 	&__header
-		margin-bottom 1.5rem
+		margin-bottom 1rem
 
 	&__title
 		margin 0
 		font-weight 600
-		font-size 1.875rem
-		line-height 2.5rem
+
+	&__title-link
+		text-decoration none
+		border-bottom 1px solid transparent
+
+		&:hover
+			border-bottom-color rgba(black, .2)
+
+	&__title
+	&__title-link
 		color black
+		transition color .2s ease-out, border .2s ease-out
 
 		&:hover
 			color rgba(black, .5)
-
-	&__title-link
-		color inherit
-		text-decoration none
+			text-decoration none
