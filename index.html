@@ -43,97 +43,147 @@
 		<title>Blog Theme</title>
 		<meta name="description" content="">
 		<meta name="keywords" content="">
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet">
 		<link href="assets/styles/app.min.css" rel="stylesheet">
 	</head>
 
 	<body class="page">
 		<div class="header">
 			<div class="container">
-				<div class="row middle-xs">
-					<div class="logo col-xs header__logo">
-						<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" class="logo__image" />
+				<div class="row">
+					<div class="col-md-1 col-xs-12 header__logo">
+						<a href="/" class="logo">
+							<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" class="logo__image" />
+						</a>
 					</div>
-					<div class="heading col-xs">
-						<h1 class="heading__title">
-							<a class="heading__link">Nikolay Kostyurin</a>
-						</h1>
+					<div class="col-md col-xs-12">
+						<div class="heading">
+							<h1 class="heading__title">
+								<a href="/" class="heading__link">Nikolay Kostyurin</a>
+							</h1>
+							<div class="heading__description">Passionate Web Developer</div>
+						</div>
+						<ul class="menu">
+							<li class="menu__item">
+								<a href="/" class="menu__link">Projects</a>
+							</li>
+							<li class="menu__item">
+								<a href="/" class="menu__link">Posts</a>
+							</li>
+							<li class="menu__item">
+								<a href="/" class="menu__link">Github</a>
+							</li>
+						</ul>
 					</div>
-					<ul class="menu col-xs header__menu">
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Projects</a>
-						</li>
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Posts</a>
-						</li>
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Github</a>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>
 		<div class="container">
-			<div class="post-list">
-				<div class="post-item post-list__item">
-					<header class="post-item__header">
-						<time datetime="asdasd" class="date post-item__date">
-							<span class="date__label">november 05, 2016</span>
-						</time>
-						<h2 class="post-item__title">
-							<a href="post.html" class="post-item__title-link">Transducers in PHP</a>
-						</h2>
-					</header>
-					<div class="text post__body">
-						<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of discussion.
-							After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers in much more
-							detail: Transducers and Inside Transducers + more.async</p>
-						<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
-							to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
-						<p>And now…transducers are available in PHP via transducers.php!</p>
+			<div class="row">
+				<div class="col-md-8 col-xs-12">
+					<div class="post-list">
+						<div class="post-item post-list__item">
+							<header class="post-item__header">
+								<time datetime="asdasd" class="date post-item__date">
+									<span class="date__label">november 05, 2016</span>
+								</time>
+								<h2 class="post-item__title">
+									<a href="post.html" class="post-item__title-link">Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted</a>
+								</h2>
+							</header>
+							<div class="text post-item__body">
+								<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of
+									discussion. After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers
+									in much more detail: Transducers and Inside Transducers + more.async</p>
+								<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
+									to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
+								<p>And now…transducers are available in PHP via transducers.php!</p>
+							</div>
+							<footer class="post-item__footer">
+								<div class="tags post-item__tags">
+									<a href="#" class="tags__tag">Tag 1</a>
+									<a href="#" class="tags__tag">Tag 2</a>
+									<a href="#" class="tags__tag">Tag 3</a>
+								</div>
+								<div class="post-item__comments">
+									<a href="#comments" class="post-item__comments-link">6 comments</a>
+								</div>
+							</footer>
+						</div>
+						<div class="post-item post-list__item">
+							<header class="post-item__header">
+								<time datetime="asdasd" class="date post-item__date">
+									<span class="date__label">november 05, 2016</span>
+								</time>
+								<h2 class="post-item__title">
+									<a href="post.html" class="post-item__title-link">Transducers in PHP</a>
+								</h2>
+							</header>
+							<div class="text post-item__body">
+								<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of
+									discussion. After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers
+									in much more detail: Transducers and Inside Transducers + more.async</p>
+								<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
+									to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
+								<p>And now…transducers are available in PHP via transducers.php!</p>
+							</div>
+							<footer class="post-item__footer">
+								<div class="tags post-item__tags">
+									<a href="#" class="tags__tag">Tag 1</a>
+									<a href="#" class="tags__tag">Tag 2</a>
+									<a href="#" class="tags__tag">Tag 3</a>
+								</div>
+								<div class="post-item__comments">
+									<a href="#comments" class="post-item__comments-link">6 comments</a>
+								</div>
+							</footer>
+						</div>
+						<div class="post-item post-list__item">
+							<header class="post-item__header">
+								<time datetime="asdasd" class="date post-item__date">
+									<span class="date__label">november 05, 2016</span>
+								</time>
+								<h2 class="post-item__title">
+									<a href="post.html" class="post-item__title-link">Transducers in PHP</a>
+								</h2>
+							</header>
+							<div class="text post-item__body">
+								<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of
+									discussion. After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers
+									in much more detail: Transducers and Inside Transducers + more.async</p>
+								<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
+									to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
+								<p>And now…transducers are available in PHP via transducers.php!</p>
+							</div>
+							<footer class="post-item__footer">
+								<div class="tags post-item__tags">
+									<a href="#" class="tags__tag">Tag 1</a>
+									<a href="#" class="tags__tag">Tag 2</a>
+									<a href="#" class="tags__tag">Tag 3</a>
+								</div>
+								<div class="post-item__comments">
+									<a href="#comments" class="post-item__comments-link">6 comments</a>
+								</div>
+							</footer>
+						</div>
 					</div>
 				</div>
-				<div class="post-item post-list__item">
-					<header class="post-item__header">
-						<time datetime="asdasd" class="date post-item__date">
-							<span class="date__label">november 05, 2016</span>
-						</time>
-						<h2 class="post-item__title">
-							<a href="post.html" class="post-item__title-link">Transducers in PHP</a>
-						</h2>
-					</header>
-					<div class="text post__body">
-						<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of discussion.
-							After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers in much more
-							detail: Transducers and Inside Transducers + more.async</p>
-						<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
-							to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
-						<p>And now…transducers are available in PHP via transducers.php!</p>
-					</div>
-				</div>
-				<div class="post-item post-list__item">
-					<header class="post-item__header">
-						<time datetime="asdasd" class="date post-item__date">
-							<span class="date__label">november 05, 2016</span>
-						</time>
-						<h2 class="post-item__title">
-							<a href="post.html" class="post-item__title-link">Transducers in PHP</a>
-						</h2>
-					</header>
-					<div class="text post__body">
-						<p>Rich Hickey recently announced that transducers are going to be added to Clojure, and it prompted quite a bit of discussion.
-							After a somewhat brief announcement, Hickey followed up with a couple videos that describe transducers in much more
-							detail: Transducers and Inside Transducers + more.async</p>
-						<p>Transducers are a very powerful concept that can be utilized in almost any language. In fact, they have been ported
-							to various other languages including JavaScript (1 and 2), Python, Ruby, Java, and Go.</p>
-						<p>And now…transducers are available in PHP via transducers.php!</p>
-					</div>
-				</div>
+				<div class="col-md-4 col-xs-12">Some Content Here...</div>
 			</div>
 		</div>
 		<script src="assets/scripts/app.min.js"></script>
 		<div class="footer">
-			<div class="container">© Blog Author, 2020</div>
+			<div class="container">
+				<form action="post.html/comment" class="form search-form">
+					<div class="form-group row">
+						<div class="col-md-4 col-xs-12">
+							<input type="search" id="query" placeholder="Search post..." class="form-control search-form__input" />
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="footer__copyright">© 2010 — 2020, Nikolay Kost</div>
+				</div>
+			</div>
 		</div>
 	</body>
 

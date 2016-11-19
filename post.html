@@ -43,33 +43,37 @@
 		<title>Transducers in PHP</title>
 		<meta name="description" content="">
 		<meta name="keywords" content="">
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet">
 		<link href="assets/styles/app.min.css" rel="stylesheet">
 	</head>
 
 	<body class="page">
 		<div class="header">
 			<div class="container">
-				<div class="row middle-xs">
-					<div class="logo col-xs header__logo">
-						<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" class="logo__image" />
+				<div class="row">
+					<div class="col-md-1 col-xs-12 header__logo">
+						<a href="/" class="logo">
+							<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" class="logo__image" />
+						</a>
 					</div>
-					<div class="heading col-xs">
-						<h1 class="heading__title">
-							<a class="heading__link">Nikolay Kostyurin</a>
-						</h1>
+					<div class="col-md col-xs-12">
+						<div class="heading">
+							<h1 class="heading__title">
+								<a href="/" class="heading__link">Nikolay Kostyurin</a>
+							</h1>
+							<div class="heading__description">Passionate Web Developer</div>
+						</div>
+						<ul class="menu">
+							<li class="menu__item">
+								<a href="/" class="menu__link">Projects</a>
+							</li>
+							<li class="menu__item">
+								<a href="/" class="menu__link">Posts</a>
+							</li>
+							<li class="menu__item">
+								<a href="/" class="menu__link">Github</a>
+							</li>
+						</ul>
 					</div>
-					<ul class="menu col-xs header__menu">
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Projects</a>
-						</li>
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Posts</a>
-						</li>
-						<li class="menu__item">
-							<a href="#about" class="menu__link">Github</a>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>
@@ -79,15 +83,16 @@
 					<span class="date__label">november 05, 2016</span>
 				</time>
 				<header class="post__header">
-					<h2 class="post__title">Transducers in PHP</h2>
+					<h1 class="post__title">Transducers in PHP</h1>
 				</header>
 				<div class="text post__body">
-					<p>There’s been a lot of talk lately about the
+					<p lead>There’s been a lot of talk lately about the
 						<a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">PSR HTTP message proposal
 						</a>, PSR-7. The purpose of the proposal is to create a shared interface that can be used by projects to interact with
 						HTTP messages for both clients and servers.</p>
 
-					<p>When I created the proposal, I envisioned the purpose is not to say projects that utilize HTTP messages need to make
+					<p>When
+						<ins>I created the proposal, I envisioned the purpose is not to say projects</ins> that utilize HTTP messages need to make
 						breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create an
 						adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
 						for
@@ -95,96 +100,20 @@
 						that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the near
 						future).</p>
 
-					<h3>Message Bodies</h3>
+					<h2>H2 Message Bodies</h2>
 
-					<p>The biggest point of contention with the proposal so far has been deciding on how the body of an HTTP message will be
-						represented. In the current proposal, the body of an HTTP message is exposed using a StreamInterface that provides
-						the following methods:</p>
+					<p>The biggest point of
+						<mark>contention with the proposal so far has been deciding on how the body of an HTTP</mark> message will be represented.
+						In the current proposal, the body of an HTTP message is exposed using a StreamInterface that provides the following
+						methods:</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-
-								<span class="k">namespace</span>
-								<span class="nx">Psr\Http\Message</span>
-								<span class="p">;</span>
-
-								<span class="k">interface</span>
-								<span class="nx">StreamInterface</span>
-								<span class="p">{</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">__toString</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">close</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">detach</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">getSize</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">tell</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">eof</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">isSeekable</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">seek</span>
-								<span class="p">(</span>
-								<span class="nv">$offset</span>
-								<span class="p">,</span>
-								<span class="nv">$whence</span>
-								<span class="o">=</span>
-								<span class="nx">SEEK_SET</span>
-								<span class="p">);</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">isWritable</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">write</span>
-								<span class="p">(</span>
-								<span class="nv">$string</span>
-								<span class="p">);</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">isReadable</span>
-								<span class="p">();</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">read</span>
-								<span class="p">(</span>
-								<span class="nv">$length</span>
-								<span class="p">);</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">getContents</span>
-								<span class="p">(</span>
-								<span class="nv">$maxLength</span>
-								<span class="o">=</span>
-								<span class="o">-</span>
-								<span class="mi">1</span>
-								<span class="p">);</span>
-								<span class="p">}</span>
-							</code>
-						</pre>
-					</div>
-
+					<p aside>When I created the proposal, I envisioned the purpose is not to say projects that utilize HTTP messages need to make
+						breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create an
+						adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
+						for
+						<a href="http://guzzlephp.org">Guzzle</a> (a very popular PHP HTTP client that I created) to utilize the interfaces directly. I also very much doubt
+						that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the near
+						future).</p>
 
 					<p>As you can see, the StreamInterface provides methods that describe the stream’s capabilities (
 						<code>isReadable()</code>,
@@ -201,6 +130,15 @@
 						<li>PHP streams</li>
 					</ul>
 
+					<p>Ordered</p>
+
+					<ol>
+						<li>string</li>
+						<li>iterators</li>
+						<li>PHP streams</li>
+					</ol>
+
+					<h3>H3 Message Bodies</h3>
 
 					<p>Utilizing a string would have required that the entire contents of the message be loaded into memory. This won’t work
 						when you’re interacting with web services like Amazon S3 where it is common to download objects storing gigabytes of
@@ -212,19 +150,11 @@
 						<code>next()</code> would return only a single byte, resulting in a huge number of method calls to download large files.
 						Furthermore, it would provide a read-only representation of a message body.</p>
 
-					<h3>PHP Streams</h3>
+					<h3>Embed Video</h3>
 
-					<p>PHP streams offer pretty powerful abstraction over streams of data. They allow you to implement custom stream protocols
-						so that you can interact with various data sources as well as stream filters which allow you to add customizations
-						to the way in which data is read or written to streams at runtime. In theory, it’s the obvious choice to use when representing
-						HTTP message bodies. In practice, it suffers from various problems that make it an impractical choice as the data source
-						for PSR-7.</p>
-
-					<h3>No Auto-registering of stream protocols and filters</h3>
-
-					<p>One of the great things about the StreamInterface approach is that you can easily implement StreamInterface to create
-						stream decorators to add behavior to streams at runtime. This is an approach that I’ve utilized heavily in Guzzle:
-					</p>
+					<span class="embed-video">
+						<iframe src="https://www.youtube.com/embed/DeObzojBO2A" frameborder="0" allowfullscreen></iframe>
+					</span>
 
 					<ul>
 						<li>
@@ -264,150 +194,10 @@
 						listed above:
 						<a href="https://github.com/mtdowling/streamer">https://github.com/mtdowling/streamer</a>. It acts as a decorator over an existing PHP stream resource.</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Streamer\Utils</span>
-								<span class="p">;</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Streamer\BaseWrapper</span>
-								<span class="p">;</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Streamer\NoSeek</span>
-								<span class="p">;</span>
-
-								<span class="c1">// Prevents an underlying stream from being seeked</span>
-								<span class="k">class</span>
-								<span class="nc">NoSeek</span>
-								<span class="k">extends</span>
-								<span class="nx">\GuzzleHttp\Streamer\BaseWrapper</span>
-								<span class="p">{</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">stream_seek</span>
-								<span class="p">(</span>
-								<span class="nv">$offset</span>
-								<span class="p">,</span>
-								<span class="nv">$whence</span>
-								<span class="p">)</span>
-								<span class="p">{</span>
-								<span class="k">return</span>
-								<span class="k">false</span>
-								<span class="p">;</span>
-								<span class="p">}</span>
-								<span class="p">}</span>
-
-								<span class="nv">$base</span>
-								<span class="o">=</span>
-								<span class="nx">Utils</span>
-								<span class="o">::</span>
-								<span class="na">create</span>
-								<span class="p">(</span>
-								<span class="s1">'foobar'</span>
-								<span class="p">);</span>
-								<span class="nv">$f</span>
-								<span class="o">=</span>
-								<span class="nx">NoSeek</span>
-								<span class="o">::</span>
-								<span class="na">wrap</span>
-								<span class="p">(</span>
-								<span class="nv">$base</span>
-								<span class="p">);</span>
-								<span class="k">echo</span>
-								<span class="nb">fread</span>
-								<span class="p">(</span>
-								<span class="nv">$f</span>
-								<span class="p">,</span>
-								<span class="mi">10</span>
-								<span class="p">);</span>
-								<span class="c1">// Outputs "foobar"</span>
-								<span class="nb">fseek</span>
-								<span class="p">(</span>
-								<span class="nv">$f</span>
-								<span class="p">,</span>
-								<span class="mi">0</span>
-								<span class="p">);</span>
-								<span class="k">echo</span>
-								<span class="nb">fread</span>
-								<span class="p">(</span>
-								<span class="nv">$f</span>
-								<span class="p">,</span>
-								<span class="mi">10</span>
-								<span class="p">);</span>
-								<span class="c1">// Outputs ""</span>
-							</code>
-						</pre>
-					</div>
-
-
-					<p>That’s awesome!</p>
-
-					<p>The problem with this approach is that PHP streams suffer from PHP’s legacy of emitting errors and warnings. Let’s say
-						you wanted to implement a message integrity check that creates a rolling checksum as data is read from a stream. When
-						the last byte of data is read, the checksum is computed and validated against an expected value. If the checksums do
-						not match, then you’d throw an exception.</p>
-
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="k">class</span>
-								<span class="nc">ThrowDecorator</span>
-								<span class="k">extends</span>
-								<span class="nx">\GuzzleHttp\Streamer\BaseWrapper</span>
-								<span class="p">{</span>
-								<span class="k">public</span>
-								<span class="k">function</span>
-								<span class="nf">stream_read</span>
-								<span class="p">(</span>
-								<span class="nv">$count</span>
-								<span class="p">)</span>
-								<span class="p">{</span>
-								<span class="c1">// Assume it's the last byte and there is a mismatch</span>
-								<span class="k">throw</span>
-								<span class="k">new</span>
-								<span class="nx">\RuntimeException</span>
-								<span class="p">(</span>
-								<span class="s1">'Checksum mismatch!'</span>
-								<span class="p">);</span>
-								<span class="p">}</span>
-								<span class="p">}</span>
-
-								<span class="nv">$base</span>
-								<span class="o">=</span>
-								<span class="nx">Utils</span>
-								<span class="o">::</span>
-								<span class="na">create</span>
-								<span class="p">(</span>
-								<span class="s1">'foobar'</span>
-								<span class="p">);</span>
-								<span class="nv">$f</span>
-								<span class="o">=</span>
-								<span class="nx">ThrowDecorator</span>
-								<span class="o">::</span>
-								<span class="na">wrap</span>
-								<span class="p">(</span>
-								<span class="nv">$base</span>
-								<span class="p">);</span>
-								<span class="nb">fread</span>
-								<span class="p">(</span>
-								<span class="nv">$f</span>
-								<span class="p">,</span>
-								<span class="mi">10</span>
-								<span class="p">);</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>Running the above example will always emit the following PHP warning followed by throwing the exception:</p>
 
-					<pre>
-						<code>PHP Warning: fread(): ThrowDecorator::stream_eof is not implemented! Assuming EOF in test.php
-						</code>
-					</pre>
+					<pre>PHP Warning: fread(): ThrowDecorator::stream_eof is not implemented! Assuming EOF in test.php</pre>
 
 					<p>So even though
 						<code>stream_eof()</code> is implemented, throwing an exception inside of
@@ -416,78 +206,10 @@
 
 					<p>“This should be implemented as a stream filter!” you might say. Ok, let’s try that:</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-
-								<span class="k">class</span>
-								<span class="nc">ThrowFilter</span>
-								<span class="k">extends</span>
-								<span class="k">php_user_filter</span>
-								<span class="p">{</span>
-								<span class="k">function</span>
-								<span class="nf">filter</span>
-								<span class="p">(</span>
-								<span class="nv">$in</span>
-								<span class="p">,</span>
-								<span class="nv">$out</span>
-								<span class="p">,</span>
-								<span class="o">&amp;</span>
-								<span class="nv">$consumed</span>
-								<span class="p">,</span>
-								<span class="nv">$closing</span>
-								<span class="p">)</span>
-								<span class="p">{</span>
-								<span class="c1">// Just throw immediately as an example</span>
-								<span class="k">throw</span>
-								<span class="k">new</span>
-								<span class="nx">\RuntimeException</span>
-								<span class="p">(</span>
-								<span class="s1">'Checksum mismatch!'</span>
-								<span class="p">);</span>
-								<span class="p">}</span>
-								<span class="p">}</span>
-
-								<span class="nb">stream_filter_register</span>
-								<span class="p">(</span>
-								<span class="s1">'throws'</span>
-								<span class="p">,</span>
-								<span class="s1">'ThrowFilter'</span>
-								<span class="p">);</span>
-								<span class="nv">$fp</span>
-								<span class="o">=</span>
-								<span class="nb">fopen</span>
-								<span class="p">(</span>
-								<span class="s1">'/tmp/foo'</span>
-								<span class="p">,</span>
-								<span class="s1">'r'</span>
-								<span class="p">);</span>
-								<span class="nb">stream_filter_append</span>
-								<span class="p">(</span>
-								<span class="nv">$fp</span>
-								<span class="p">,</span>
-								<span class="s1">'throws'</span>
-								<span class="p">);</span>
-								<span class="nb">fread</span>
-								<span class="p">(</span>
-								<span class="nv">$fp</span>
-								<span class="p">,</span>
-								<span class="s2">"Line1</span>
-								<span class="se">\n</span>
-								<span class="s2">"</span>
-								<span class="p">);</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>When the above example is run it emits a PHP warning before throwing the exception:</p>
 
-					<pre>
-						<code>PHP Warning: fread(): Unprocessed filter buckets remaining on input brigade in test.php on line 20
-						</code>
-					</pre>
+					<pre>PHP Warning: fread(): Unprocessed filter buckets remaining on input brigade in test.php on line 20</pre>
 
 					<p>The fact that PHP streams do not allow you to throw exceptions in the various abstractions poses a huge usability issue
 						that basically renders them useless if you were wanting to decorate the behavior at runtime without resorting to emitting
@@ -501,46 +223,9 @@
 						make libraries implementing this proposal much more accessible to new users without making any tradeoffs in terms of
 						encapsulation or flexibility.</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="c1">// Outputs the string representation</span>
-								<span class="k">echo</span>
-								<span class="nv">$message</span>
-								<span class="o">-&gt;</span>
-								<span class="na">getBody</span>
-								<span class="p">();</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>On the other hand, using PHP streams directly would require boilerplate code each time you want to convert a message
 						body to a string:</p>
-
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="nv">$resource</span>
-								<span class="o">=</span>
-								<span class="nv">$message</span>
-								<span class="o">-&gt;</span>
-								<span class="na">getBody</span>
-								<span class="p">();</span>
-								<span class="nb">rewind</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-								<span class="k">echo</span>
-								<span class="nb">stream_get_contents</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-							</code>
-						</pre>
-					</div>
 
 
 					<h3>Functionality is spread over many functions</h3>
@@ -551,135 +236,14 @@
 					<p>What if you wanted to know the amount of data in a PHP stream? When using the StreamInterface, it’s a simple call to
 						<code>getSize()</code>. When using PHP streams, it requires the following code:</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="nv">$stats</span>
-								<span class="o">=</span>
-								<span class="nb">fstat</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-
-								<span class="k">if</span>
-								<span class="p">(</span>
-								<span class="nb">isset</span>
-								<span class="p">(</span>
-								<span class="nv">$stats</span>
-								<span class="p">[</span>
-								<span class="s1">'size'</span>
-								<span class="p">]))</span>
-								<span class="p">{</span>
-								<span class="nv">$size</span>
-								<span class="o">=</span>
-								<span class="nv">$stats</span>
-								<span class="p">[</span>
-								<span class="s1">'size'</span>
-								<span class="p">];</span>
-								<span class="p">}</span>
-								<span class="k">else</span>
-								<span class="p">{</span>
-								<span class="nv">$size</span>
-								<span class="o">=</span>
-								<span class="k">null</span>
-								<span class="p">;</span>
-								<span class="p">}</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>What if you wanted to know whether or not a stream is seekable? Using the StreamInterface, it’s a simple call to
 						<code>isSeekable()</code>. When using PHP streams, you need the following code:</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="nv">$meta</span>
-								<span class="o">=</span>
-								<span class="nb">stream_get_meta_data</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-								<span class="nv">$seekable</span>
-								<span class="o">=</span>
-								<span class="nv">$meta</span>
-								<span class="p">[</span>
-								<span class="s1">'seekable'</span>
-								<span class="p">];</span>
-							</code>
-						</pre>
-					</div>
 
 
 					<p>That wasn’t too bad. But what if you wanted to know whether or not a stream is readable? Using the StreamInterface:
 						<code>isReadable()</code>. Using PHP streams:</p>
-
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="nv">$meta</span>
-								<span class="o">=</span>
-								<span class="nb">stream_get_meta_data</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-								<span class="nv">$mode</span>
-								<span class="o">=</span>
-								<span class="nv">$meta</span>
-								<span class="p">[</span>
-								<span class="s1">'mode'</span>
-								<span class="p">];</span>
-								<span class="nv">$readableModes</span>
-								<span class="o">=</span>
-								<span class="p">[</span>
-								<span class="s1">'r'</span>
-								<span class="p">,</span>
-								<span class="s1">'w+'</span>
-								<span class="p">,</span>
-								<span class="s1">'r+'</span>
-								<span class="p">,</span>
-								<span class="s1">'x+'</span>
-								<span class="p">,</span>
-								<span class="s1">'c+'</span>
-								<span class="p">,</span>
-								<span class="s1">'rb'</span>
-								<span class="p">,</span>
-								<span class="s1">'w+b'</span>
-								<span class="p">,</span>
-								<span class="s1">'r+b'</span>
-								<span class="p">,</span>
-								<span class="s1">'x+b'</span>
-								<span class="p">,</span>
-								<span class="s1">'c+b'</span>
-								<span class="p">,</span>
-								<span class="s1">'rt'</span>
-								<span class="p">,</span>
-								<span class="s1">'w+t'</span>
-								<span class="p">,</span>
-								<span class="s1">'r+t'</span>
-								<span class="p">,</span>
-								<span class="s1">'x+t'</span>
-								<span class="p">,</span>
-								<span class="s1">'c+t'</span>
-								<span class="p">,</span>
-								<span class="s1">'a+'</span>
-								<span class="p">];</span>
-								<span class="nv">$isReadable</span>
-								<span class="o">=</span>
-								<span class="nb">in_array</span>
-								<span class="p">(</span>
-								<span class="nv">$mode</span>
-								<span class="p">,</span>
-								<span class="nv">$readableModes</span>
-								<span class="p">);</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>A similar approach would need to be taken to know if a stream is writable. As you can see attempting to get the same
 						functionality of a StreamInterface using native PHP streams would require quite a bit of boilerplate code.</p>
@@ -705,12 +269,13 @@
 						PHP stream from a StreamInterface.</p>
 
 					<pre>
-						<code>The biggest thing I'm missing from the stream api, is to get to the underlying stream. -- We have to ensure that the
-							common case is performant, and that it's possible to take advantage of PHP's (fairly robust) stream handling capabilities
-							when feasible. I totally get the portability and simplicity benefits of abstracting it away from stream API, but there
-							needs to be a way to use, well, PHP, and do so performantly.
-						</code>
+						The biggest thing I'm missing from the stream api, is to get to the underlying stream. -- We have to ensure that the common
+						case is performant, and that it's possible to take advantage of PHP's (fairly robust) stream handling capabilities
+						when feasible. I totally get the portability and simplicity benefits of abstracting it away from stream API, but there
+						needs to be a way to use, well, PHP, and do so performantly.
 					</pre>
+
+					<hr />
 
 					<p>You want a way to represent a stream abstraction that does not necessarily actually wrap a PHP stream to be able to
 						be used like a PHP stream. This can be achieved in a number of different ways.</p>
@@ -721,61 +286,6 @@
 						instance to a PHP stream using a custom PHP stream wrapper:
 						<a href="https://github.com/guzzle/streams/blob/master/src/GuzzleStreamWrapper.php:">https://github.com/guzzle/streams/blob/master/src/GuzzleStreamWrapper.php:</a>
 					</p>
-
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Stream</span>
-								<span class="p">;</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Stream\GuzzleStreamWrapper</span>
-								<span class="p">;</span>
-
-								<span class="c1">// Create a Guzzle stream</span>
-								<span class="nv">$stream</span>
-								<span class="o">=</span>
-								<span class="nx">Stream\create</span>
-								<span class="p">(</span>
-								<span class="s1">'this is a string body'</span>
-								<span class="p">);</span>
-
-								<span class="c1">// Create a PHP stream from the Guzzle stream that just wraps the Guzzle stream</span>
-								<span class="nv">$resource</span>
-								<span class="o">=</span>
-								<span class="nx">GuzzleStreamWrapper</span>
-								<span class="o">::</span>
-								<span class="na">getResource</span>
-								<span class="p">(</span>
-								<span class="nv">$stream</span>
-								<span class="p">);</span>
-								<span class="k">echo</span>
-								<span class="nb">fread</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">,</span>
-								<span class="mi">4</span>
-								<span class="p">);</span>
-								<span class="c1">// Outputs "this"</span>
-
-								<span class="c1">// Notice that the original stream is still in a consistent state</span>
-								<span class="k">echo</span>
-								<span class="nv">$stream</span>
-								<span class="o">-&gt;</span>
-								<span class="na">tell</span>
-								<span class="p">();</span>
-								<span class="c1">// 4</span>
-								<span class="k">echo</span>
-								<span class="nb">ftell</span>
-								<span class="p">(</span>
-								<span class="nv">$resource</span>
-								<span class="p">);</span>
-								<span class="c1">// 4</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>The great thing about this approach is that it does not break the abstraction of StreamInterface. For example, if you’ve
 						decorated the stream to add various capabilities (e.g., checksum validation when the last byte is read), those same
@@ -805,34 +315,6 @@
 						will provide a native PHP stream resource that does not need to utilize a custom Guzzle stream wrapper.
 					</p>
 
-					<div class="highlight">
-						<pre>
-							<code class="php">
-								<span class="cp">&lt;?php</span>
-								<span class="k">use</span>
-								<span class="nx">GuzzleHttp\Stream</span>
-								<span class="p">;</span>
-
-								<span class="nv">$stream</span>
-								<span class="o">=</span>
-								<span class="nx">Stream\create</span>
-								<span class="p">(</span>
-								<span class="nb">fopen</span>
-								<span class="p">(</span>
-								<span class="s1">'/tmp/foo'</span>
-								<span class="p">,</span>
-								<span class="s1">'r'</span>
-								<span class="p">));</span>
-								<span class="nv">$resource</span>
-								<span class="o">=</span>
-								<span class="nv">$stream</span>
-								<span class="o">-&gt;</span>
-								<span class="na">detach</span>
-								<span class="p">();</span>
-							</code>
-						</pre>
-					</div>
-
 
 					<p>I think that a similar change to the StreamInterface proposed in in PSR-7 should be made.</p>
 
@@ -848,9 +330,9 @@
 				</div>
 				<footer class="post__footer">
 					<div class="tags post__tags">
-						<span class="tags__tag">Tag 1</span>
-						<span class="tags__tag">Tag 2</span>
-						<span class="tags__tag">Tag 3</span>
+						<a href="#" class="tags__tag">Tag 1</a>
+						<a href="#" class="tags__tag">Tag 2</a>
+						<a href="#" class="tags__tag">Tag 3</a>
 					</div>
 				</footer>
 			</div>
@@ -862,11 +344,12 @@
 					<a href="#" title="Subscribe to comments RSS Feed" class="comments__feed">
 						<i class="material-icons comments__feed-icon">rss_feed</i>
 					</a>
-					<a href="#" title="Subscribe to comments via email" class="comments__email">
+					<a href="#" title="Subscribe to comments via email" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?"
+						class="comments__email">
 						<i class="material-icons comments__email-icon">email</i>
 					</a>
 				</header>
-				<div class="comment-list comments__list">
+				<div data-init="comment-list" class="comment-list comments__list">
 					<div class="comment comment-list__item">
 						<section class="comment__body">
 							<header class="comment__header">
@@ -1121,11 +604,57 @@
 							</div>
 						</section>
 					</div>
-					<form action="post.html/comment" class="comment-form comment-list__form">
-						<div class="form-group">
-							<textarea placeholder="Text here..." class="form-control comment-form__textarea"></textarea>
+					<form action="post.html/comment" class="comment-form form comment-list__form">
+						<h2 class="comment-form__title">Your comment</h2>
+						<div class="form-group row">
+							<div class="offset-sm-2 col-sm-10">
+								<div class="avatar comment-form__avatar">
+									<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" alt="Nikolay Kost" class="avatar__image"
+									/>
+								</div>
+								<a href="Nikolay Kost" class="link comment-form__author">Nikolay Kost</a>
+							</div>
 						</div>
-						<button type="submit" class="btn btn-primary btn-sm">Post</button>
+						<div class="form-group row">
+							<label for="nickname" class="form-label col-sm-2 col-form-label">Name</label>
+							<div class="col-sm-10">
+								<input id="nickname" placeholder="Your name..." class="form-control form-control--full-width comment-form__input"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="email" class="form-label col-sm-2 col-form-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" id="email" placeholder="Your email, wasnt be shown..." class="form-control form-control--full-width comment-form__input"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="site" class="form-label col-sm-2 col-form-label">Website</label>
+							<div class="col-sm-10">
+								<input type="url" id="site" placeholder="Your site..." class="form-control form-control--full-width comment-form__input"
+								/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="comment" class="form-label col-sm-2 col-form-label">Text here</label>
+							<div class="col-sm-10">
+								<textarea id="comment" placeholder="Text here..." class="form-control form-control--textarea form-control--full-width comment-form__textarea"></textarea>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="offset-sm-2 col-sm-10">
+								<div class="form-check">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" /> Recieve comments by email</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="offset-sm-2 col-sm-10">
+								<button type="submit" class="btn btn--submit">Post Comment</button>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="comments__form"></div>
@@ -1133,7 +662,18 @@
 		</div>
 		<script src="assets/scripts/app.min.js"></script>
 		<div class="footer">
-			<div class="container">© Blog Author, 2020</div>
+			<div class="container">
+				<form action="post.html/comment" class="form search-form">
+					<div class="form-group row">
+						<div class="col-md-4 col-xs-12">
+							<input type="search" id="query" placeholder="Search post..." class="form-control search-form__input" />
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="footer__copyright">© 2010 — 2020, Nikolay Kost</div>
+				</div>
+			</div>
 		</div>
 	</body>
 
