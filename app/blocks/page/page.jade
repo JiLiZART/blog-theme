@@ -4,19 +4,25 @@ include ../logo/logo
 include ../heading/heading
 include ../menu/menu
 include ../container/container
+include ../search-form/search-form
 
 mixin page()
 	+b('body').page&attributes(attributes)
 
 		+header()
 			+container()
-				.row.middle-xs
-					+logo('https://avatars0.githubusercontent.com/u/62051?v=3&s=460').col-xs.header__logo
-					+heading('Nikolay Kostyurin').col-xs
-					+menu([{url: '#about', label: 'Projects'}, {url: '#about', label: 'Posts'}, {url: '#about', label: 'Github'}]).col-xs.header__menu
+				.row
+					.col-md-1.col-xs-12.header__logo
+						+logo('https://avatars0.githubusercontent.com/u/62051?v=3&s=460')
+					.col-md.col-xs-12
+						+heading('Nikolay Kostyurin', '/', 'Passionate Web Developer')
+						+menu([{url: '/', label: 'Projects'}, {url: '/', label: 'Posts'}, {url: '/', label: 'Github'}])
 
 		block
 
 		+footer()
+
 			+container()
-				| © Blog Author, 2020
+				+search-form()
+				.row
+					.footer__copyright © 2010 — 2020, Nikolay Kost

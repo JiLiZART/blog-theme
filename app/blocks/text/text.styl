@@ -1,9 +1,77 @@
-.text
-	font-size 1rem
-	line-height 1.4rem
+$ctx = text
 
-	blockquote,
-	p,
-	ul,
-	ol
+.{$ctx}
+	position relative
+	font-size 1rem
+	line-height 1.7
+	max-width 45rem
+
+	h2, p, blockquote, ul, ol
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+	h1
+		display none
+
+	h2
+		font-size 1.25em
+
+	p
+		font-size 1rem
+
+		&[lead]
+			font-size 1.1rem
+
+		&:empty
+			display none
+
+	a
+		color #0076FF
+		text-decoration none
+		border-bottom 1px solid rgba(0, 118, 255, 0.2)
+
+		&:hover
+			color #FF3824
+			border-bottom-color rgba(252, 99, 65, 0.3)
+
+	img
+		max-width 100%
+		height auto
+
+	mark, ins
+		text-decoration none
+
+	mark
+		background-color #ffffbc
+
+	abbr
+		font-weight bold
+		border-bottom 1px dashed #000
+
+	li
+		margin-bottom .5rem
+
+		&:last-child
+			margin-bottom 0
+
+	blockquote, p, ul, ol
 		margin-bottom 1rem
+
+	tt, code
+		margin 0
+		padding 0.2rem 0
+		font-family Consolas, "Liberation Mono", Menlo, Courier, monospace
+		font-size 85%
+		background-color rgba(black, .04)
+		border-radius .2rem
+
+	pre
+		margin-bottom 0
+		word-break normal
+		padding 1rem
+		overflow auto
+		font-size 85%
+		line-height 1.45
+		background-color #f7f7f7
+		border-radius .2rem
+		hyphens none

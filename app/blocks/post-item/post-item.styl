@@ -7,13 +7,15 @@
 	&__title
 		margin 0
 		font-weight 600
+		font-size 2.625rem
+		line-height 1.27
 
 	&__title-link
 		text-decoration none
-		border-bottom 1px solid transparent
+		border-bottom 1px solid rgba(black, .3)
 
 		&:hover
-			border-bottom-color rgba(black, .2)
+			border-bottom-color rgba(252, 99, 65, 0.3)
 
 	&__title
 	&__title-link
@@ -21,5 +23,20 @@
 		transition color .2s ease-out, border .2s ease-out
 
 		&:hover
-			color rgba(black, .5)
+			color #FF3824
 			text-decoration none
+
+	&__tags
+		margin-bottom .5rem
+
+	&__comments
+		float right
+
+	&__comments-link
+		color #333
+		font-size 0.875rem
+		border-bottom 1px solid rgba(#333, .3)
+
+		&:hover
+			color black
+			border-bottom-color rgba(black, .2)

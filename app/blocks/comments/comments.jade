@@ -9,7 +9,7 @@ mixin comments()
 				a.comments__feed(href="#", title="Subscribe to comments RSS Feed")
 					i.material-icons.comments__feed-icon rss_feed
 
-				a.comments__email(href="#", title="Subscribe to comments via email")
+				a.comments__email(href="#", title="Subscribe to comments via email", data-toggle="popover", data-content="And here's some amazing content. It's very engaging. Right?")
 					i.material-icons.comments__email-icon email
 
 			+comment-list().comments__list

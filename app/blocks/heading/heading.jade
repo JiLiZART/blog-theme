@@ -1,4 +1,8 @@
-mixin heading(word, url)
+mixin heading(word, url, desc)
 	.heading&attributes(attributes)
 		h1.heading__title
 			a.heading__link(href=url)=word
+
+		.heading__description=desc
+
+		block

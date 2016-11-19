@@ -1,0 +1,45 @@
+$ctx = form-control
+
+.{$ctx}
+	margin: 0
+	padding .5rem .75rem
+
+	display: inline-block
+	min-height: 2em
+	font-size 1rem
+	box-sizing: border-box
+
+	background white
+	border: 1px solid rgba(0, 0, 0, .15)
+	border-radius .25rem
+
+	outline: none
+	-webkit-appearance: none
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+	&::-webkit-search-decoration
+		-webkit-appearance: none;
+
+	&::-webkit-search-cancel-button
+		display none
+
+	&::-ms-clear
+		display none
+
+	&::-webkit-input-placeholder
+		color: #999
+		text-indent: 0
+
+	&::-moz-placeholder
+		opacity: 1
+		color: #999
+
+	&:focus
+		border-color: #ffcc00
+		box-shadow: 0 0 0 1px #ffcc00
+
+	&--textarea
+		resize: none
+
+	&--full-width
+		width 100%

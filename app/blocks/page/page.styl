@@ -3,8 +3,25 @@ $ctx = page
 html
 	font-size 16px
 
+	+mobile()
+		font-size 14px
+
+::selection
+::-moz-selection
+	background #fff2a8
+
 .{$ctx}
-	font 1rem / 1.4 'PT Sans', sans-serif
+	margin 0
+	padding 0
+
+	color #000
+	direction ltr
+	font-size 1rem
+	font-family -apple-system, BlinkMacSystemFont, 'PT Sans', 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif
+	line-height 1.4
+	font-weight 400
+	-webkit-font-smoothing subpixel-antialiased
+	-moz-osx-font-smoothing auto
 
 	a
 		text-decoration none

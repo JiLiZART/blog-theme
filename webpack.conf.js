@@ -29,22 +29,29 @@ export default function makeWebpackConfig({
 	eslint = true
 }) {
 	return {
-		entry: path.resolve('./app/scripts/app.js'),
+		entry: {
+			app: path.resolve(__dirname + '/app/scripts/app.js')
+		},
 		watch,
 		debug,
 		bail: false,
 		profile: true,
 		output: {
-			path: path.resolve('./dist/assets/scripts/'),
-			filename: 'app.min.js',
-			pathinfo: false
+			path: path.resolve(__dirname + '/dist/assets/scripts/'),
+			pathinfo: false,
+
+			filename: "[name].chunkhash.js",
+			chunkFilename: "[chunkhash].js"
 		},
 		devtool: (sourcemaps || !debug) ? '#source-map' : 'eval',
 		resolve: {
 			modulesDirectories: [
 				'node_modules'
 			],
-			extensions: ['.js', '']
+			extensions: ['.js', ''],
+			alias: {
+				blocks: path.resolve('./app/blocks')
+			},
 		},
 		module: {
 			preLoaders: [{
@@ -74,10 +81,18 @@ export default function makeWebpackConfig({
 				verbose: false,
 				cache: true
 			}),
+			new webpack.ProvidePlugin({
+				$: "jquery",
+				jQuery: "jquery",
+				Tether: "tether"
+			}),
 			new webpack.DefinePlugin({
 				'process.env': {
 					NODE_ENV: JSON.stringify(process.env.NODE_ENV)
 				}
+			}),
+			new webpack.optimize.CommonsChunkPlugin({
+				names: ["common", "manifest"]
 			})
 		].concat(debug ? [
 			new NpmInstallPlugin({saveDev: true}),

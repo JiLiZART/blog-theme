@@ -1,7 +1,44 @@
-mixin comment-form()
-	form.comment-form(action="post.html/comment")&attributes(attributes)
-		.form-group
-			textarea.form-control.comment-form__textarea(placeholder="Text here...")
+include ../avatar/avatar
+include ../link/link
 
-		button.btn.btn-primary.btn-sm(type="submit") Post
+mixin comment-form()
+	form.comment-form.form(action="post.html/comment")&attributes(attributes)
+		h2.comment-form__title Your comment
+
+		.form-group.row
+			.offset-sm-2.col-sm-10
+				+avatar('https://avatars0.githubusercontent.com/u/62051?v=3&s=460', 'Nikolay Kost').comment-form__avatar
+				+link('Nikolay Kost').comment-form__author Nikolay Kost
+
+		.form-group.row
+			label.form-label.col-sm-2.col-form-label(for="nickname") Name
+			.col-sm-10
+				input.form-control.form-control--full-width.comment-form__input(id="nickname", placeholder="Your name...")
+
+		.form-group.row
+			label.form-label.col-sm-2.col-form-label(for="email") Email
+			.col-sm-10
+				input.form-control.form-control--full-width.comment-form__input(type="email", id="email", placeholder="Your email, wasnt be shown...")
+
+		.form-group.row
+			label.form-label.col-sm-2.col-form-label(for="site") Website
+			.col-sm-10
+				input.form-control.form-control--full-width.comment-form__input(type="url", id="site", placeholder="Your site...")
+
+		.form-group.row
+			label.form-label.col-sm-2.col-form-label(for="comment") Text here
+			.col-sm-10
+				textarea.form-control.form-control--textarea.form-control--full-width.comment-form__textarea(id="comment", placeholder="Text here...")
+
+		.form-group.row
+			.offset-sm-2.col-sm-10
+				.form-check
+					label.form-check-label
+						input.form-check-input(type="checkbox")
+						|  Recieve comments by email
+
+		.form-group.row
+			.offset-sm-2.col-sm-10
+				button.btn.btn--submit(type="submit") Post Comment
+
 		block
