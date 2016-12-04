@@ -1,15 +1,20 @@
 .tags
-	display inline-block
-	vertical-align top
+	display inline-flex
 
 	&__tag
 		margin-right .25rem
-		font-size 0.875rem
+		padding .1rem .5rem
 		display inline-block
 		vertical-align top
+		font-size 0.875rem
 		color #000
-		border-bottom 1px solid rgba(0, 0, 0, 0.2)
+		border 1px solid rgba(black, .2)
+		border-radius .25rem
 
 		&:hover
-			color #a5d149
-			border-bottom-color rgba(#a5d149, 0.4)
+			color #000
+			border-color rgba(black, .3)
+
+		&:focus
+			border-color #ffcc00
+			box-shadow 0 0 0 1px #ffcc00

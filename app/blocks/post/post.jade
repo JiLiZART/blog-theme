@@ -1,20 +1,28 @@
 include ../tags/tags
 include ../text/text
 include ../date/date
+include ../more-posts/more-posts
 include ../comments/comments
 include ../container/container
 
 mixin post(title)
 	article.post&attributes(attributes)
 		+container().post__container
-			+date('november 05, 2016', 'asdasd').post__date
-			header.post__header
-				h1.post__title=title
+			.row
+				.col-md-8.col-xs-12
+					+date('november 05, 2016', 'asdasd').post__date
+					header.post__header
+						h1.post__title=title
 
-			+text().post__body
-				block
+					+text().post__body
+						block
 
-			footer.post__footer
-				+tags().post__tags
+					footer.post__footer
+						+tags().post__tags
+
+				.col-md-4.col-xs-12
+					| Sidebar content here
+
+	+more-posts()
 
 	+comments()

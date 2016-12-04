@@ -1,0 +1,8 @@
+mixin more-posts()
+	div.more-posts&attributes(attributes)
+		.container
+			h3.more-posts__title More Related Posts
+			.more-posts__list.text
+				each val in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+					p.more-posts__item
+						a.more-posts__link(href="post.html") Some Related Post #{val}

@@ -18,11 +18,15 @@ mixin page()
 						+heading('Nikolay Kostyurin', '/', 'Passionate Web Developer')
 						+menu([{url: '/', label: 'Projects'}, {url: '/', label: 'Posts'}, {url: '/', label: 'Github'}])
 
+					.col-md-4.col-xs-12
+						+search-form()
+
 		block
 
 		+footer()
-
 			+container()
-				+search-form()
+				.row
+					.col-md-4.col-xs-12
+						+search-form()
 				.row
 					.footer__copyright © 2010 — 2020, Nikolay Kost

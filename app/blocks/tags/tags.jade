@@ -1,5 +1,4 @@
 mixin tags()
 	+b.tags&attributes(attributes)
-		a.tags__tag(href="#") Tag 1
-		a.tags__tag(href="#") Tag 2
-		a.tags__tag(href="#") Tag 3
+		each val in [1, 2, 3, 4, 5]
+			a.tags__tag(href="#") Tag #{val}
