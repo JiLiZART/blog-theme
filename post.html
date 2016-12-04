@@ -74,269 +74,193 @@
 							</li>
 						</ul>
 					</div>
+					<div class="col-md-4 col-xs-12">
+						<form action="post.html/comment" class="form search-form">
+							<div class="form-group">
+								<input type="search" id="query" placeholder="Search post..." class="form-control search-form__input" />
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 		<article class="post">
 			<div class="container post__container">
-				<time datetime="asdasd" class="date post__date">
-					<span class="date__label">november 05, 2016</span>
-				</time>
-				<header class="post__header">
-					<h1 class="post__title">Transducers in PHP</h1>
-				</header>
-				<div class="text post__body">
-					<p lead>There’s been a lot of talk lately about the
-						<a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">PSR HTTP message proposal
-						</a>, PSR-7. The purpose of the proposal is to create a shared interface that can be used by projects to interact with
-						HTTP messages for both clients and servers.</p>
+				<div class="row">
+					<div class="col-md-8 col-xs-12">
+						<time datetime="asdasd" class="date post__date">
+							<span class="date__label">november 05, 2016</span>
+						</time>
+						<header class="post__header">
+							<h1 class="post__title">Transducers in PHP</h1>
+						</header>
+						<div class="text post__body">
+							<p lead>There’s been a lot of talk lately about the
+								<a href="https://github.com/php-fig/fig-standards/blob/master/proposed/http-message.md">PSR HTTP message proposal
+								</a>, PSR-7. The purpose of the proposal is to create a shared interface that can be used by projects to interact
+								with HTTP messages for both clients and servers.</p>
 
-					<p>When
-						<ins>I created the proposal, I envisioned the purpose is not to say projects</ins> that utilize HTTP messages need to make
-						breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create an
-						adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
-						for
-						<a href="http://guzzlephp.org">Guzzle</a> (a very popular PHP HTTP client that I created) to utilize the interfaces directly. I also very much doubt
-						that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the near
-						future).</p>
+							<p>When
+								<ins>I created the proposal, I envisioned the purpose is not to say projects</ins> that utilize HTTP messages need to
+								make breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create
+								an adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
+								for
+								<a href="http://guzzlephp.org">Guzzle</a> (a very popular PHP HTTP client that I created) to utilize the interfaces directly. I also very much doubt
+								that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the
+								near future).</p>
 
-					<h2>H2 Message Bodies</h2>
+							<h2>H2 Message Bodies</h2>
 
-					<p>The biggest point of
-						<mark>contention with the proposal so far has been deciding on how the body of an HTTP</mark> message will be represented.
-						In the current proposal, the body of an HTTP message is exposed using a StreamInterface that provides the following
-						methods:</p>
+							<p>The biggest point of
+								<mark>contention with the proposal so far has been deciding on how the body of an HTTP</mark> message will be represented.
+								In the current proposal, the body of an HTTP message is exposed using a StreamInterface that provides the following
+								methods:</p>
 
-					<p aside>When I created the proposal, I envisioned the purpose is not to say projects that utilize HTTP messages need to make
-						breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create an
-						adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
-						for
-						<a href="http://guzzlephp.org">Guzzle</a> (a very popular PHP HTTP client that I created) to utilize the interfaces directly. I also very much doubt
-						that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the near
-						future).</p>
+							<p aside>When I created the proposal, I envisioned the purpose is not to say projects that utilize HTTP messages need to make
+								breaking changes to use the proposed interfaces, but rather give projects an interface for which they can create
+								an adapter. For example, if there are swaths of changes to the proposal before it is accepted, then it is very unlikely
+								for
+								<a href="http://guzzlephp.org">Guzzle</a> (a very popular PHP HTTP client that I created) to utilize the interfaces directly. I also very much doubt
+								that projects like Symfony or Zend Framework would update their HTTP message interfaces to match (at least in the
+								near future).</p>
 
-					<p>As you can see, the StreamInterface provides methods that describe the stream’s capabilities (
-						<code>isReadable()</code>,
-						<code>isWritable()</code>,
-						<code>isSeekable()</code>), can be cast to a string, and provides methods that allow you to read and write to the stream
-						without having to load the entire stream into memory. Using the StreamInterface also consolidates all of the functions
-						you need to interact with the data source in one easy to find place.</p>
+							<p>There are several other options that could have been utilized to represent an HTTP message:</p>
 
-					<p>There are several other options that could have been utilized to represent an HTTP message:</p>
+							<ul>
+								<li>string</li>
+								<li>iterators</li>
+								<li>PHP streams</li>
+							</ul>
 
-					<ul>
-						<li>string</li>
-						<li>iterators</li>
-						<li>PHP streams</li>
-					</ul>
+							<p>Ordered</p>
 
-					<p>Ordered</p>
+							<ol>
+								<li>string</li>
+								<li>iterators</li>
+								<li>PHP streams</li>
+							</ol>
 
-					<ol>
-						<li>string</li>
-						<li>iterators</li>
-						<li>PHP streams</li>
-					</ol>
+							<h3>H3 Message Bodies</h3>
 
-					<h3>H3 Message Bodies</h3>
+							<p>Utilizing a string would have required that the entire contents of the message be loaded into memory. This won’t work
+								when you’re interacting with web services like Amazon S3 where it is common to download objects storing gigabytes
+								of data.
+							</p>
 
-					<p>Utilizing a string would have required that the entire contents of the message be loaded into memory. This won’t work
-						when you’re interacting with web services like Amazon S3 where it is common to download objects storing gigabytes of
-						data.
-					</p>
+							<p>Utilizing iterators
+								<em>could</em> work, but it would likely cause a significant performance penalty due to the fact that each call to
+								<code>next()</code> would return only a single byte, resulting in a huge number of method calls to download large files.
+								Furthermore, it would provide a read-only representation of a message body.</p>
 
-					<p>Utilizing iterators
-						<em>could</em> work, but it would likely cause a significant performance penalty due to the fact that each call to
-						<code>next()</code> would return only a single byte, resulting in a huge number of method calls to download large files.
-						Furthermore, it would provide a read-only representation of a message body.</p>
+							<h3>Embed Video</h3>
 
-					<h3>Embed Video</h3>
+							<span class="embed-video">
+								<iframe src="https://www.youtube.com/embed/DeObzojBO2A" frameborder="0" allowfullscreen></iframe>
+							</span>
 
-					<span class="embed-video">
-						<iframe src="https://www.youtube.com/embed/DeObzojBO2A" frameborder="0" allowfullscreen></iframe>
-					</span>
+							<ul>
+								<li>
+									<a href="https://github.com/guzzle/streams/blob/master/src/CachingStream.php">Cache previously read bytes</a>
+								</li>
+								<li>
+									<a href="https://github.com/guzzle/streams/blob/master/src/LimitStream.php">Limit the data to be read to a subset of a large stream</a>. This requires
+									<code>getSize()</code>,
+									<code>tell()</code>, and various other methods to be decorated to limit the wrapped stream to only a subset of the larger
+									stream.
+								</li>
+								<li>
+									<a href="https://github.com/guzzle/streams/blob/master/src/NoSeekStream.php">Prevent seeking of a stream</a>
+								</li>
+								<li>
+									<a href="https://github.com/guzzle/message-integrity-subscriber/blob/master/src/ReadIntegrityStream.php">Implement message integrity checks</a>. This will throw an exception if a calculated rolling checksum of stream
+									data as it is read does not match the expected checksum.
+								</li>
+								<li>
+									<a href="https://github.com/guzzle/progress-subscriber/blob/master/src/UploadProgressStream.php">Provide progress information</a>
+								</li>
+							</ul>
 
-					<ul>
-						<li>
-							<a href="https://github.com/guzzle/streams/blob/master/src/CachingStream.php">Cache previously read bytes</a>
-						</li>
-						<li>
-							<a href="https://github.com/guzzle/streams/blob/master/src/LimitStream.php">Limit the data to be read to a subset of a large stream</a>. This requires
-							<code>getSize()</code>,
-							<code>tell()</code>, and various other methods to be decorated to limit the wrapped stream to only a subset of the larger
-							stream.
-						</li>
-						<li>
-							<a href="https://github.com/guzzle/streams/blob/master/src/NoSeekStream.php">Prevent seeking of a stream</a>
-						</li>
-						<li>
-							<a href="https://github.com/guzzle/message-integrity-subscriber/blob/master/src/ReadIntegrityStream.php">Implement message integrity checks</a>. This will throw an exception if a calculated rolling checksum of stream data
-							as it is read does not match the expected checksum.
-						</li>
-						<li>
-							<a href="https://github.com/guzzle/progress-subscriber/blob/master/src/UploadProgressStream.php">Provide progress information</a>
-						</li>
-					</ul>
+							<p>If the StreamInterface were able to return an underlying resources that can be mutated, then you would be breaking
+								the abstraction by abandoning any decorators and you would be leaving the StreamInterface in an inconsistent state.
+								Because of this, the only way that the StreamInterface should return an actual underlying PHP stream resource should
+								be when the
+								<code>detach()</code> method is called (a method that already promises to leave a StreamInterface in an inconsistent state).
+								Calling
+								<code>StreamInterface::detach()</code> would return
+								<code>null</code> if the StreamInterface doesn’t actually wrap an underlying resource, or would return a PHP stream resource
+								if one is utilized.
+							</p>
 
-
-					<p>To add behavior like this to PHP streams, you’d need to implement custom PHP stream wrappers and/or stream filters for
-						each of the above decorators. The problem here is that you would need some kind of bootstrap script to register your
-						named stream wrappers and filters before they can be utilized. There’s no way in PHP to automatically register stream
-						filters or wrappers before they are used. However, PHP has long offered autoloading of classes, which is the method
-						in which StreamInterface decorators would be implemented.</p>
-
-					<h3>Exceptions cause warnings in stream wrappers and filters</h3>
-
-					<p>I’ve been thinking lately that creating PHP resource stream decorators like I’ve listed above would be possible, and
-						could be implemented relatively painlessly using PHP stream wrappers. It turns out it is!</p>
-
-					<p>I started a GitHub repository that makes it easy to create PHP stream wrapper decorators that can implement what I’ve
-						listed above:
-						<a href="https://github.com/mtdowling/streamer">https://github.com/mtdowling/streamer</a>. It acts as a decorator over an existing PHP stream resource.</p>
+							<p>As a matter of fact, I recently pushed a change to Guzzle’s streams API that implements this change:
+								<a href="https://github.com/guzzle/streams/commit/368ee042ef5d88ffbc19632e0c114a54a3ac45b2.">https://github.com/guzzle/streams/commit/368ee042ef5d88ffbc19632e0c114a54a3ac45b2.</a>
+								While detaching the underlying resource will not utilize any decorators that have been attached to the StreamInterface, it
+								will provide a native PHP stream resource that does not need to utilize a custom Guzzle stream wrapper.
+							</p>
 
 
-					<p>Running the above example will always emit the following PHP warning followed by throwing the exception:</p>
+							<p>I think that a similar change to the StreamInterface proposed in in PSR-7 should be made.</p>
 
-					<pre>PHP Warning: fread(): ThrowDecorator::stream_eof is not implemented! Assuming EOF in test.php</pre>
+							<h3>Summary</h3>
 
-					<p>So even though
-						<code>stream_eof()</code> is implemented, throwing an exception inside of
-						<code>stream_read()</code>
-						will always emit the above warning.</p>
-
-					<p>“This should be implemented as a stream filter!” you might say. Ok, let’s try that:</p>
-
-
-					<p>When the above example is run it emits a PHP warning before throwing the exception:</p>
-
-					<pre>PHP Warning: fread(): Unprocessed filter buckets remaining on input brigade in test.php on line 20</pre>
-
-					<p>The fact that PHP streams do not allow you to throw exceptions in the various abstractions poses a huge usability issue
-						that basically renders them useless if you were wanting to decorate the behavior at runtime without resorting to emitting
-						PHP warnings and errors rather than utilizing PHP exceptions.</p>
-
-					<h3>Cannot be cast to a string</h3>
-
-					<p>Because it implements
-						<code>__toString()</code>, the StreamInterface approach allows the convenience of being able to treat a stream of data as
-						a string while still allowing for the flexibility of not loading a bunch of data all into memory. This feature will
-						make libraries implementing this proposal much more accessible to new users without making any tradeoffs in terms of
-						encapsulation or flexibility.</p>
-
-
-					<p>On the other hand, using PHP streams directly would require boilerplate code each time you want to convert a message
-						body to a string:</p>
-
-
-					<h3>Functionality is spread over many functions</h3>
-
-					<p>To interact with PHP streams and get the same level of usability as the StreamInterface, you’d need to interact with
-						many different methods that aren’t always easy to find (especially for a new user).</p>
-
-					<p>What if you wanted to know the amount of data in a PHP stream? When using the StreamInterface, it’s a simple call to
-						<code>getSize()</code>. When using PHP streams, it requires the following code:</p>
-
-
-					<p>What if you wanted to know whether or not a stream is seekable? Using the StreamInterface, it’s a simple call to
-						<code>isSeekable()</code>. When using PHP streams, you need the following code:</p>
-
-
-
-					<p>That wasn’t too bad. But what if you wanted to know whether or not a stream is readable? Using the StreamInterface:
-						<code>isReadable()</code>. Using PHP streams:</p>
-
-					<p>A similar approach would need to be taken to know if a stream is writable. As you can see attempting to get the same
-						functionality of a StreamInterface using native PHP streams would require quite a bit of boilerplate code.</p>
-
-					<p>Just for reference, here are links to PHP stream related functions and filesystem functions that can be used with PHP
-						streams:
-					</p>
-
-					<ul>
-						<li>Filesystem functions:
-							<a href="http://php.net/manual/en/ref.filesystem.php">http://php.net/manual/en/ref.filesystem.php</a>
-						</li>
-						<li>Stream functions:
-							<a href="http://php.net/manual/en/ref.stream.php">http://php.net/manual/en/ref.stream.php</a>
-						</li>
-					</ul>
-
-
-					<h3>StreamInterface concerns</h3>
-
-					<p>Even with the all of the problems that come with using PHP streams directly, various members of the mailing list has
-						raised concerns about the StreamInterface approach. The most common concern is that there is no way to get a native
-						PHP stream from a StreamInterface.</p>
-
-					<pre>
-						The biggest thing I'm missing from the stream api, is to get to the underlying stream. -- We have to ensure that the common
-						case is performant, and that it's possible to take advantage of PHP's (fairly robust) stream handling capabilities
-						when feasible. I totally get the portability and simplicity benefits of abstracting it away from stream API, but there
-						needs to be a way to use, well, PHP, and do so performantly.
-					</pre>
-
-					<hr />
-
-					<p>You want a way to represent a stream abstraction that does not necessarily actually wrap a PHP stream to be able to
-						be used like a PHP stream. This can be achieved in a number of different ways.</p>
-
-					<h3>Creating a PHP stream from a StreamInterface</h3>
-
-					<p>When using Guzzle streams (a 1:1 implementation of the proposed StreamInterface), you can convert any StreamInterface
-						instance to a PHP stream using a custom PHP stream wrapper:
-						<a href="https://github.com/guzzle/streams/blob/master/src/GuzzleStreamWrapper.php:">https://github.com/guzzle/streams/blob/master/src/GuzzleStreamWrapper.php:</a>
-					</p>
-
-					<p>The great thing about this approach is that it does not break the abstraction of StreamInterface. For example, if you’ve
-						decorated the stream to add various capabilities (e.g., checksum validation when the last byte is read), those same
-						capabilities will still be utilized when using the native PHP stream resource that wraps the Guzzle stream. This would
-						be the ideal approach to utilize when trying to use a StreamInterface as a native PHP stream.</p>
-
-					<h3>Getting the underlying PHP stream from a StreamInterface</h3>
-
-					<p>While there’s no requirement that a StreamInterface actually wraps a PHP stream resource (e.g., reading from strings,
-						reading mocked data, etc.), it will often be the case when interacting with things like files on disks or remote sockets.
-						In these cases, you might want to get the actual underlying stream resource from the StreamInterface.</p>
-
-					<p>If the StreamInterface were able to return an underlying resources that can be mutated, then you would be breaking the
-						abstraction by abandoning any decorators and you would be leaving the StreamInterface in an inconsistent state. Because
-						of this, the only way that the StreamInterface should return an actual underlying PHP stream resource should be when
-						the
-						<code>detach()</code> method is called (a method that already promises to leave a StreamInterface in an inconsistent state).
-						Calling
-						<code>StreamInterface::detach()</code> would return
-						<code>null</code> if the StreamInterface doesn’t actually wrap an underlying resource, or would return a PHP stream resource
-						if one is utilized.
-					</p>
-
-					<p>As a matter of fact, I recently pushed a change to Guzzle’s streams API that implements this change:
-						<a href="https://github.com/guzzle/streams/commit/368ee042ef5d88ffbc19632e0c114a54a3ac45b2.">https://github.com/guzzle/streams/commit/368ee042ef5d88ffbc19632e0c114a54a3ac45b2.</a>
-						While detaching the underlying resource will not utilize any decorators that have been attached to the StreamInterface, it
-						will provide a native PHP stream resource that does not need to utilize a custom Guzzle stream wrapper.
-					</p>
-
-
-					<p>I think that a similar change to the StreamInterface proposed in in PSR-7 should be made.</p>
-
-					<h3>Summary</h3>
-
-					<p>I’ve outlined the different approaches that can be taken to represent HTTP message bodies in PSR-7 and provided more
-						motiviation as to why I proposed the StreamInterface solution. Using PHP streams directly does not allow for a robust
-						stream decoration strategy due to the fact that PHP streams suffers from legacy PHP warnings and errors. By showing
-						how you can use a custom stream wrapper to convert a StreamInterface to a PHP stream and by returning the underlying
-						PHP stream resource when the
-						<code>StreamInterface::detach()</code> method is called, I’ve addressed the concern that you cannot utilize native PHP streams
-						when using a StreamInterface abstraction.</p>
-				</div>
-				<footer class="post__footer">
-					<div class="tags post__tags">
-						<a href="#" class="tags__tag">Tag 1</a>
-						<a href="#" class="tags__tag">Tag 2</a>
-						<a href="#" class="tags__tag">Tag 3</a>
+							<p>I’ve outlined the different approaches that can be taken to represent HTTP message bodies in PSR-7 and provided more
+								motiviation as to why I proposed the StreamInterface solution. Using PHP streams directly does not allow for a robust
+								stream decoration strategy due to the fact that PHP streams suffers from legacy PHP warnings and errors. By showing
+								how you can use a custom stream wrapper to convert a StreamInterface to a PHP stream and by returning the underlying
+								PHP stream resource when the
+								<code>StreamInterface::detach()</code> method is called, I’ve addressed the concern that you cannot utilize native PHP
+								streams when using a StreamInterface abstraction.</p>
+						</div>
+						<footer class="post__footer">
+							<div class="tags post__tags">
+								<a href="#" class="tags__tag">Tag 1</a>
+								<a href="#" class="tags__tag">Tag 2</a>
+								<a href="#" class="tags__tag">Tag 3</a>
+								<a href="#" class="tags__tag">Tag 4</a>
+								<a href="#" class="tags__tag">Tag 5</a>
+							</div>
+						</footer>
 					</div>
-				</footer>
+					<div class="col-md-4 col-xs-12">Sidebar content here</div>
+				</div>
 			</div>
 		</article>
+		<div class="more-posts">
+			<div class="container">
+				<h3 class="more-posts__title">More Related Posts</h3>
+				<div class="more-posts__list text">
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 1</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 2</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 3</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 4</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 5</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 6</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 7</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 8</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 9</a>
+					</p>
+					<p class="more-posts__item">
+						<a href="post.html" class="more-posts__link">Some Related Post 10</a>
+					</p>
+				</div>
+			</div>
+		</div>
 		<div class="comments">
 			<div class="container">
 				<header class="comments__header">
@@ -607,7 +531,7 @@
 					<form action="post.html/comment" class="comment-form form comment-list__form">
 						<h2 class="comment-form__title">Your comment</h2>
 						<div class="form-group row">
-							<div class="offset-sm-2 col-sm-10">
+							<div class="col-sm-4">
 								<div class="avatar comment-form__avatar">
 									<img src="https://avatars0.githubusercontent.com/u/62051?v=3&amp;s=460" alt="Nikolay Kost" class="avatar__image"
 									/>
@@ -616,34 +540,34 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="nickname" class="form-label col-sm-2 col-form-label">Name</label>
-							<div class="col-sm-10">
+							<!--label.form-label.col-sm-2.col-form-label(for="nickname") Name-->
+							<div class="col-sm-4">
 								<input id="nickname" placeholder="Your name..." class="form-control form-control--full-width comment-form__input"
 								/>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="email" class="form-label col-sm-2 col-form-label">Email</label>
-							<div class="col-sm-10">
+							<!--label.form-label.col-sm-2.col-form-label(for="email") Email-->
+							<div class="col-sm-4">
 								<input type="email" id="email" placeholder="Your email, wasnt be shown..." class="form-control form-control--full-width comment-form__input"
 								/>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="site" class="form-label col-sm-2 col-form-label">Website</label>
-							<div class="col-sm-10">
+							<!--label.form-label.col-sm-2.col-form-label(for="site") Website-->
+							<div class="col-sm-4">
 								<input type="url" id="site" placeholder="Your site..." class="form-control form-control--full-width comment-form__input"
 								/>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="comment" class="form-label col-sm-2 col-form-label">Text here</label>
+							<!--label.form-label.col-sm-2.col-form-label(for="comment") Text here-->
 							<div class="col-sm-10">
 								<textarea id="comment" placeholder="Text here..." class="form-control form-control--textarea form-control--full-width comment-form__textarea"></textarea>
 							</div>
 						</div>
 						<div class="form-group row">
-							<div class="offset-sm-2 col-sm-10">
+							<div class="col-sm-10">
 								<div class="form-check">
 									<label class="form-check-label">
 										<input type="checkbox" class="form-check-input" /> Recieve comments by email</label>
@@ -651,8 +575,9 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<div class="offset-sm-2 col-sm-10">
+							<div class="col-sm-10">
 								<button type="submit" class="btn btn--submit">Post Comment</button>
+								<button type="button" class="btn btn--plain">Preview</button>
 							</div>
 						</div>
 					</form>
@@ -663,13 +588,15 @@
 		<script src="assets/scripts/app.min.js"></script>
 		<div class="footer">
 			<div class="container">
-				<form action="post.html/comment" class="form search-form">
-					<div class="form-group row">
-						<div class="col-md-4 col-xs-12">
-							<input type="search" id="query" placeholder="Search post..." class="form-control search-form__input" />
-						</div>
+				<div class="row">
+					<div class="col-md-4 col-xs-12">
+						<form action="post.html/comment" class="form search-form">
+							<div class="form-group">
+								<input type="search" id="query" placeholder="Search post..." class="form-control search-form__input" />
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 				<div class="row">
 					<div class="footer__copyright">© 2010 — 2020, Nikolay Kost</div>
 				</div>
