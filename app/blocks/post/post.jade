@@ -20,9 +20,28 @@ mixin post(title)
 					footer.post__footer
 						+tags().post__tags
 
+						.post__nav
+							span &lsaquo;
+							a.post__nav-left(href="#") Left Post
+
+							span.post__nav-hotkeys
+								span.post__nav-key &larr;
+								span.post__nav-shortcut Ctrl / &#8984;
+								span.post__nav-key &rarr;
+
+							a.post__nav-right(href="#") Right Post
+							span &rsaquo;
+
+						.post__share
+							h4.post__share-title Share link
+							.post__share-items.likely
+								.facebook Share
+								.twitter Tweet
+								.gplus +1
+								.vkontakte Share
+								.pinterest Pin
+								.odnoklassniki Like
+								.telegram Send
+
 				.col-md-4.col-xs-12
 					| Sidebar content here
-
-	+more-posts()
-
-	+comments()

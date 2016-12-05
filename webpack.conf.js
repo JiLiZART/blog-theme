@@ -29,19 +29,18 @@ export default function makeWebpackConfig({
 	eslint = true
 }) {
 	return {
-		entry: {
-			app: path.resolve(__dirname + '/app/scripts/app.js')
-		},
+		entry: path.resolve('./app/scripts/app.js'),
 		watch,
 		debug,
 		bail: false,
 		profile: true,
 		output: {
-			path: path.resolve(__dirname + '/dist/assets/scripts/'),
+			path: path.resolve('./dist/assets/scripts/'),
 			pathinfo: false,
+			filename: 'app.min.js',
 
-			filename: "[name].chunkhash.js",
-			chunkFilename: "[chunkhash].js"
+			// filename: "[name].chunkhash.js",
+			// chunkFilename: "[chunkhash].js"
 		},
 		devtool: (sourcemaps || !debug) ? '#source-map' : 'eval',
 		resolve: {
@@ -90,10 +89,10 @@ export default function makeWebpackConfig({
 				'process.env': {
 					NODE_ENV: JSON.stringify(process.env.NODE_ENV)
 				}
-			}),
-			new webpack.optimize.CommonsChunkPlugin({
-				names: ["common", "manifest"]
 			})
+			// new webpack.optimize.CommonsChunkPlugin({
+			// 	names: ["common", "manifest"]
+			// })
 		].concat(debug ? [
 			new NpmInstallPlugin({saveDev: true}),
 			new webpack.HotModuleReplacementPlugin()

@@ -1,8 +1,12 @@
 import svg4everybody from 'svg4everybody';
 import $ from 'jquery';
+import likely from 'ilyabirman-likely';
 
 window.Tether = require('tether');
 require('bootstrap');
+
+// Finds all the widgets in the DOM and initializes them
+
 // import BemNaming from 'bem-naming';
 
 // const naming = BemNaming({
@@ -13,28 +17,5 @@ require('bootstrap');
 $(() => {
 	svg4everybody();
 
-	require.ensure([
-		'blocks/comment-form'
-	], () => {
-		$('[data-init]').each((i, el) => {
-			console.log('i', i, el);
-		});
-	});
-
-	require.ensure([
-		'blocks/comment-list'
-	], () => {
-		$('[data-init]').each((i, el) => {
-			console.log('i', i, el);
-		});
-	});
-
-	require.ensure([
-		'blocks/comment'
-	], () => {
-		$('[data-init]').each((i, el) => {
-			console.log('i', i, el);
-		});
-	});
-
+	console.log(likely.initiate());
 });
